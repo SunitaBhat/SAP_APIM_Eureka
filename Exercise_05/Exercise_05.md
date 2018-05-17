@@ -1,43 +1,37 @@
 <table width=100% border=>
-<tr><td colspan=2><h1>EXERCISE 05 - ML APIs Exploration</h1></td></tr>
-<tr><td><h3>SAP Partner Workshop</h3></td><td><h1><img src="images/clock.png"> &nbsp;20 min</h1></td></tr>
+<tr><td colspan=2><h1>EXERCISE 05 - Explore translation APIs on SAP API Business hub</h1></td></tr>
+<tr><td><h3>SAP Presales Workshop</h3></td><td><h1><img src="images/clock.png"> &nbsp;20 min</h1></td></tr>
 </table>
 
 
 ## Description
-In this exercise, you’ll learn how 
+In this exercise, you’ll learn how
 
-* to consume pretrained SAP Leonardo Machine Learning services from SAP API Business Hub sandbox in a SAPUI5 application
+* to test SAP Translation Hub APIS from SAP API Business Hub sandbox
 
 ## Target group
 
 * Developers
-* People interested in SAP Leonardo and Machine Learning 
+* People interested in SAP API Business Hub and API Management
 
 
 ## Goal
 
-In this exercise you can experience how easy it is to use the available SAP Leonardo Machine Learning foundation services on SAP API Business Hub. The models are already pre-trained and can be tried out on the web page.
+In this exercise you can experience how easy it is to explore and use the available API's on SAP API Business Hub. This specific example targets at using the SAP Translation Hub APIs to translate User name into Portuguese
 
 
 ## Prerequisites
-  
+
 Here below are prerequisites for this exercise.
 
 * A trial account on the SAP Cloud Platform. You can get one by registering here <https://account.hanatrial.ondemand.com>
-* Download the files [Topic_Detection.zip](files/Topic_Detection.zip?raw=true) and [test_images.zip](files/test_images.zip?raw=true) and save them in a proper location: they will be used later in this document.
-
->NOTE: only *test\_images.zip* file must be extracted in your folder
-
 
 ## Steps
 
-1. [Use SAP Leonardo ML Topic Detection on API Business Hub](#topic-detection)
-1. [Use SAP Leonardo ML Image Classification on API Business Hub](#image-classification)
+1. [Explore SAP Translation Hub API's on API Business Hub](#topic-detection)
 
- 
 
-### <a name="topic-detection"></a> Use SAP Leonardo ML Topic Detection on API Business Hub
+### <a name="topic-detection"></a> Explore SAP Translation Hub API's on API Business Hub
 1. Open SAP Business Hub in your browser <https://api.sap.com>  
 	![](images/01.png)
 
@@ -46,79 +40,58 @@ Here below are prerequisites for this exercise.
 1. 	Click on **Try New Design** so that you can start trying the new design has been rolled out for the API Hub  
 	![](images/02.png)
 
-1. 	Enter the text "Leonardo" in the search box, hit ENTER and choose **SAP Leonardo Machine Learning - Functional Services**  
+1. We need to login to test the service: click on the **Log On** button at the top right corner  
 	![](images/03.png)
 
-1. 	Enter the text "Topic" in the search box, hit ENTER and choose **Topic Detection API**  
-	![](images/04.png)
+1. Enter the credentials provided by your instructor/Your P/S user/pwd and click **Continue**  
+  ![](images/04.png)
 
-1. We need to login to test the service: click on the **Log On** button at the top right corner  
+1. 	Select the checkbox **API Package** in the Refine By section on left hand side. Enter the text "translation" in the search box, hit ENTER and choose **SAP Translation Hub** API Package
 	![](images/05.png)
 
-1. Enter the credentials provided by your instructor and click **Continue**  
+1. Select the **SAP Translation Hub** under APIs
 	![](images/06.png)
 
-1. Expand the **POST** request **/inference_sync**  
-	![](images/07.png)
+1. Click on **Translate** under API References section
+  	![](images/07.png)
 
-1. Scroll down to the **PARAMETERS** and under **options**, paste the following parameters  
-	
-	```json
-	{"numTopics":3, "numTopicsPerDoc":2, "numKeywordsPerTopic":15}
-	```	
+1. We see the supported operation Post, Click on **POST** request (*Note: 11.	Description about the Translate resource, like required parameters to be passed to try-out API are maintained*)
 	![](images/08.png)
 
-1. Under **files** press the **Browse** button  
+1. Scroll down to the **PARAMETERS** and under **translate**, paste the following parameters and click on **Try out** button
+
+	```json
+  {
+  "targetLanguages": [
+    "pt"
+  ],
+  "enableMT": true,
+  "enableTranslationQualityEstimation": true,
+  "domain": "B2",
+  "units": [
+    {
+      "textType": "XFLD",
+
+      "key": "LOGIN_USERNAME_FIELD",
+      "value": "User Name"
+         }
+  ]
+}
+	```
 	![](images/09.png)
 
-1. Choose the *Topic_Detection.zip* file (you have already downloaded it in the prerequisites section) containing text files about computer science and pies  
+1. You should receive a **Response Code** of **200**. Check the result in the **Response Body**: you should now see that the User Name is translated to Portuguese  "Nome do usuário", you should see a content like this  
 	![](images/10.png)
-
-1. The name of the selected file appears aside the **Browse** button. Click on  **Try out** button  
-	![](images/11.png)
-
-1. You should receive a **Response Code** of **200**. Check the result in the **Response Body**: you should see a content like this  
-	![](images/12.png)
-
-1. Try again by changing the values for **numTopics** to **2** and **numTopicsPerDocs** to **1**  
-	![](images/13.png)
-
-1. What has changed? You should receive an answer similar to this  
-	![](images/14.png)
-
-1. You have completed the exercise! You have successfully used the Topic Detection API service to find **numKeywordsPerTopic** keywords and **numTopics** topics across all documents. The topics get a number, starting with 0. So, if you define 3 Topics, they will be numbered with 0, 1, 2. With **numTopicsPerDoc** you define how many of the topics of the entire document corpus can be found in one document. The algorithm chooses the number of topics which fits best and assigns them a score which is not normalized to 1.  
-
-
-### <a name="image-classification"></a> Use SAP Leonardo ML Image Classification on API Business Hub
-
-1. Go back to <https://api.sap.com/shell/discover/contentpackage/SAPLeonardoMLFunctionalServices/Artifacts>
-	![](images/15.png)
-
-1. 	Enter the text "image" in the search box, hit ENTER and choose **Image Classifier Service**  
-	![](images/16.png)
-
-1. Expand the **POST** request **/inference_sync**  
-	![](images/17.png)
-
-1. Click on the **Browse...** button for the **files** parameter  
-	![](images/18.png)
-
-1. Select one of the images you have in the folder where you have extracted the test_images.zip file given in the prerequisites. For example choose the *tennis\_ball.jpg* file. then click on the **Try out** button  
-	![](images/19.png)
-
-1. Look at the response code: it should be 200, meaning that the request was successful. Then look at the response body: you should be able to read the predictions against the image you uploaded with their scores  
-	![](images/20.png)
 
 1. Congratulations! You have completed the exercise.
 
 
 ## Summary
-This concludes the exercise. You should have learned how to use the available SAP Leonardo Machine Learning foundation services on SAP API Business Hub.
+This concludes the exercise. You should have learned how to explore and test API's available on SAP API Business Hub.
 
 You are now able to:
 
-* Browse through API Business Hub to find the latest functional and business services of SAP Leonardo ML foundation
-* Test SAP Leonardo ML foundation services directly on API Business Hub
-* Understand the Topic Detection Model.
+* Browse through API Business Hub to find the SAP Translation Hub APIs
+* Test the APIs on API Business Hub
 
-Please proceed with next exercise.
+Please proceed with the next exercise.
